@@ -1,0 +1,50 @@
+{% extends 'indexs.html' %}
+
+
+                     {% block content %}
+                        <form  method="GET" action="search">
+                            <input type="text"  name="user" placeholder="Enter somthing"><button>submit</button>
+                        {% csrf_token %}
+                    <!-- [ breadcrumb ] end -->
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ basic-table ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Books Table</h5>
+
+                                            </td><a href="{% url 'upload'%}" class="btn btn-primary btn-sm">Book Upload</a></td>
+                                                                        {{datas}}
+
+                                        </div>
+                                            <form class="table-responsive">
+
+                                                <table class="table">
+                                                            <th>Id</th>
+                                                            <th>Title</th>
+                                                            <th>Author</th>
+                                                            <th>Download</th>
+                                                            <th>Delete</th>
+
+                                                        {% for book in book%}
+                                                        <tr>
+                                                            <td>{{book.id}}</td>
+                                                            <td>{{book.title}}</td>
+                                                            <td>{{book.author}}</td>
+                                                            <td><a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">Download</a></td>
+
+                                                            <td>
+                                                           <form method="post" action="#">
+                                                           {% csrf_token %}
+                                                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                           </form>
+                                                       </td>
+                                                        </tr>
+
+
+                                                        {% endfor %}
+     {% endblock %}

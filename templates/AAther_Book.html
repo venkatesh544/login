@@ -1,0 +1,105 @@
+{% extends 'indexs.html' %}
+
+
+                     {% block content %}
+
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ basic-table ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+
+                                            <h5>Books Table</h5>
+
+
+                            <form  method="GET" action="Ather_Books_store">
+                            <input type="text"  name="user" placeholder="Enter somthing"><button>submit</button>
+                        {% csrf_token %}                                             </div>
+
+                                                  <div class="container">
+                                                    <div class="row">
+                                                      <div class="col-md-12">
+                                                       <div class="table-responsive">
+
+                                                <table class="table">
+                                                            <th>Id</th>
+                                                            <th>Title</th>
+                                                            <th>Author</th>
+                                                            <th>Download</th>
+
+                                                        {% for book in Books%}
+                                                        <tr>
+                                                            <td>{{book.id}}</td>
+                                                            <td>{{book.title}}</td>
+                                                            <td>{{book.author}}</td>
+                                                            <td><a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">Download</a></td>
+
+                                                            <td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                        </table>
+                                            </div>
+                                            </form>
+                                                    <hr>
+
+                                                <!--
+                                                <br>
+                                                HAS previous :{{Books.has_previous}}<br>
+                                                HAS Next :{{Books.has_next}}<br>
+                                                Current page :{{Books.number}}<br>
+                                                Number of page :{{Books.paginator.num_pages}}<br>
+                                                <br>
+
+
+                                                {% if Books.has_previous %}
+                                                <a href="?page=1" class="btn btn-primary btn-sm">&laquoFirst</a>
+                                                <a href="?page={{ Books.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
+                                                {% endif %}
+
+
+                                                Page{{ Books.number }} of {{ Books.paginator.num_pages }}
+                                                {% if Books.has_next %}
+                                                <a href="?page={{ Books.next_page_number }}" class="btn btn-primary btn-sm">next</a>
+
+                                                <a href="?page={{ Books.paginator.num_pages }}" class="btn btn-primary btn-sm">Last&raquo</a>
+                                                {% endif %}
+-->
+
+{% if Books.has_other_pages %}
+    <ul class="pagination">
+        {% if Books.has_previous %}
+            <li class="waves-effect"><a href="?page=
+                    {{ Books.previous_page_number }}{% if request.GET.get.x %}&q={{ request.GET.get.x }}{% endif %}"><i
+                    class="material-icons">chevron_left</i></a></li>
+        {% else %}
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        {% endif %}
+        {% for num in Books.paginator.page_range %}
+            {% if Books.number == num %}
+                <li class="active"><a href="#!">{{ num }}</a></li>
+            {% else %}
+                <li class="waves-effect"><a
+                        href="?page={{ num }}{% if request.GET.get.x %}&q={{ request.GET.get.x }}{% endif %}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if Books.has_next %}
+            <li class="waves-effect"><a
+                    href="?page={{ Books.next_page_number }}{% if request.GET.get.x %}&q={{ request.GET.get.x }}{% endif %}"><i
+                    class="material-icons">chevron_right</i></a></li>
+        {% else %}
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        {% endif %}
+    </ul>
+{% endif %}
+                                                <br>
+                                                <br>
+                                            </div>
+
+                                    </div>
+                                </div>
+     {% endblock %}
